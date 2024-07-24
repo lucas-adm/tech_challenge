@@ -11,7 +11,7 @@ type Register = {
 
 const Register = () => {
 
-    const [darkMode, setDarkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
+    const [darkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
 
     const initialData: Register = {
         username: "",

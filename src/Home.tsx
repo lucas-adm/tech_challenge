@@ -13,7 +13,7 @@ import axios from "axios";
 
 const Home = () => {
 
-    const [darkMode, setDarkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
+    const [darkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
 
     const [showModal, setShowModal] = useState<boolean>(false);
 

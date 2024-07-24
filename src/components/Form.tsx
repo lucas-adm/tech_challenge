@@ -24,7 +24,7 @@ type FormProps = {
 
 const Form = forwardRef<HTMLFormElement, FormProps>(({ onSubmit }, ref) => {
 
-    const [darkMode, setDarkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
+    const [darkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
 
     const initialLaunch: Launch = {
         date: "",

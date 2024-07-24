@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 const NotFound = () => {
 
-  const [darkMode, setDarkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
+  const [darkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
