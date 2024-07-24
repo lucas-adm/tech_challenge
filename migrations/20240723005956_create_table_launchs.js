@@ -1,7 +1,7 @@
 export function up(knex) {
     return knex.schema.createTable('launchs', (table) => {
         table.increments('id').primary();
-        table.timestamps(true, true);
+        table.date('date');
         table.string('description', 333).notNullable();
         table.decimal('value', 10, 2).notNullable().unsigned();
         table.string('type', 33).notNullable();
