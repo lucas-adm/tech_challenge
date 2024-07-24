@@ -3,24 +3,24 @@ import { useNavigate, Link } from "react-router-dom";
 
 import axios from "axios";
 
-type Login = {
+type Register = {
     username: string;
     email: string;
     password: string;
 };
 
-const Login = () => {
+const Register = () => {
 
     const [darkMode, setDarkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
 
-    const initialData: Login = {
+    const initialData: Register = {
         username: "",
         email: "",
         password: ""
     };
 
-    const [data, setData] = useState<Login>(initialData);
-    const [errors, setErrors] = useState<Login>(initialData);
+    const [data, setData] = useState<Register>(initialData);
+    const [errors, setErrors] = useState<Register>(initialData);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setErrors({
@@ -45,30 +45,31 @@ const Login = () => {
         }
 
         const API = import.meta.env.VITE_API;
-        axios.post(`${API}/login`, data)
-            .then(() => {
-                navigate('/');
-                sessionStorage.setItem("logged", "true")
-            })
+        axios.post(`${API}/register`, data)
+            .then(() => navigate('/login'))
             .catch((err) => {
-                console.error(err);
-                if (err.response.status === 404) {
-                    setErrors({ ...errors, username: "Talvez esteja errado", email: "Talvez esteja errado", password: "Talvez esteja errado" })
-                }
                 const { username, email, password } = JSON.parse(err.config.data);
-                if (username.length > 33) setErrors({ ...errors, username: "Máximo de 33 caracteres." });
-                if (email.length > 50) setErrors({ ...errors, email: "Máximo de 50 caracteres." });
+                if (username.length > 33) {
+                    setErrors({ ...errors, username: "Máximo de 33 caracteres." });
+                } else {
+                    if (username === data.username) setErrors({ ...errors, username: "Nome já existe." });
+                }
+                if (email.length > 50) {
+                    setErrors({ ...errors, email: "Máximo de 50 caracteres." });
+                } else {
+                    if (email === data.email) setErrors({ ...errors, email: "Email já existe." });
+                }
                 if (password.length > 33) setErrors({ ...errors, password: "Máximo de 33 caracteres." });
             })
             .finally(() => {
                 setRequesting(false);
-            })
+            });
     }
 
     return (
         <div className={`${darkMode ? "dark" : ""}`}>
             <section className="w-screen h-svh md:h-screen flex flex-col gap-4 flex-center justify-center items-center bg-white dark:bg-slate-950">
-                <img src="/imgs/favicon.png" alt="favicon" className="w-24 rounded-full border-2 border-transparent hover:border-indigo-500 transition-colors" />
+                <Link to={'/login'}><img src="/imgs/favicon.png" alt="favicon" className="w-24 rounded-full border-2 border-transparent hover:border-indigo-500 transition-colors" /></Link>
                 <form onSubmit={handleSubmit} className="w-full max-w-sm border-2 border-indigo-500 flex flex-col gap-2 bg-slate-50 dark:bg-slate-900 p-8 rounded">
                     <div className="flex flex-col gap-1">
                         <label htmlFor="username" className="w-fit dark:text-white">Nome</label>
@@ -86,10 +87,7 @@ const Login = () => {
                         <span className="text-red-500">{errors.password}</span>
                     </div>
                     <div className="flex items-center justify-center">
-                        <button className="bg-indigo-500 bg-opacity-50 py-2 px-4 rounded text-lg text-indigo-800 w-full text-center dark:text-white mt-4">{requesting ? "Conectando..." : "Conectar"}</button>
-                    </div>
-                    <div className="flex items-center justify-center">
-                        <Link to={'/register'} className="bg-white border-2 border-indigo-500 bg-opacity-50 dark:bg-opacity-100  py-2 px-4 rounded text-lg text-indigo-800 w-full text-center text-indigo-500 mt-4">Cadastrar</Link>
+                        <button className="bg-indigo-500 bg-opacity-50 py-2 px-4 rounded text-lg text-indigo-800 dark:text-white w-full mt-4">{requesting ? "Registrando..." : "Registrar"}</button>
                     </div>
                 </form>
             </section>
@@ -97,4 +95,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register

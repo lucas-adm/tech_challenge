@@ -6,16 +6,17 @@ type TableRow = {
 }
 
 const TableRow = ({ date, description, value, type }: TableRow) => {
+
     return (
         <tr className="bg-white">
             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                {date}
+                {new Date(date).toLocaleDateString('pt-BR')}
             </td>
             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                 {description}
             </td>
             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                <span className="font-bold text-indigo-500">R$ {value}</span>
+                <span className="font-bold text-indigo-500">R$ {value.replace('.', ',')}</span>
             </td>
             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                 {type === "debit" &&
