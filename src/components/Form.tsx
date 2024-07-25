@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React, { forwardRef } from 'react';
 
 export type Launch = {
@@ -89,6 +89,13 @@ const Form = forwardRef<HTMLFormElement, FormProps>(({ onSubmit }, ref) => {
 
     const [requesting, setRequesting] = useState<boolean>(false);
 
+    useEffect(() => {
+        setData({
+            ...data,
+            date: data.date
+        })
+    }, [data.date])
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 
         event.preventDefault(), setRequesting(true);
@@ -120,7 +127,8 @@ const Form = forwardRef<HTMLFormElement, FormProps>(({ onSubmit }, ref) => {
                 onSubmit();
             })
             .catch((err) => {
-                const { description, value } = JSON.parse(err.config.data);
+                const { date, description, value } = JSON.parse(err.config.data);
+                if (Number(date.slice(5, 7) % 2) === 0 && Number(date.slice(8, 10)) > 30) setErrors({ ...errors, date: "Data inválida." })
                 if (description.length > 88) setErrors({ ...errors, description: "Máximo de 77 caracteres." })
                 if ((value.replace('.', '')).length > 12) setErrors({ ...errors, value: "Máximo de 12 dígitos." })
                 if (isNaN(value) && !isFinite(value)) setErrors({ ...errors, value: "Número inválido" })

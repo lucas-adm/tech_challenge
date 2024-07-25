@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate, Link } from "react-router-dom";
 
 import axios from "axios";
@@ -34,6 +34,14 @@ const Login = () => {
     const navigate = useNavigate();
 
     const [requesting, setRequesting] = useState<boolean>(false);
+
+    useEffect(() => {
+        setData({
+            ...data,
+            username: data.username.toLowerCase(),
+            email: data.email.toLowerCase()
+        });
+    }, [data.username, data.email]);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(), setRequesting(true);
@@ -89,7 +97,7 @@ const Login = () => {
                         <button className="bg-indigo-500 bg-opacity-50 py-2 px-4 rounded text-lg text-indigo-800 w-full text-center dark:text-white mt-4">{requesting ? "Conectando..." : "Conectar"}</button>
                     </div>
                     <div className="flex items-center justify-center">
-                        <Link to={'/register'} className="bg-white border-2 border-indigo-500 bg-opacity-50 dark:bg-opacity-100  py-2 px-4 rounded text-lg text-indigo-800 w-full text-center text-indigo-500 mt-4">Cadastrar</Link>
+                        <Link to={'/register'} className="bg-white border-2 border-indigo-500 bg-opacity-50 dark:bg-opacity-100  py-2 px-4 rounded text-lg text-indigo-800 w-full text-center dark:text-indigo-500 mt-4">Cadastrar</Link>
                     </div>
                 </form>
             </section>

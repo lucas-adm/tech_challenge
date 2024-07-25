@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate, Link } from "react-router-dom";
 
 import axios from "axios";
@@ -35,8 +35,18 @@ const Register = () => {
 
     const [requesting, setRequesting] = useState<boolean>(false);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    useEffect(() => {
+        setData({
+            ...data,
+            username: data.username.toLowerCase(),
+            email: data.email.toLowerCase()
+        });
+    }, [data.username, data.email]);
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(), setRequesting(true);
+
+        console.log(data);
 
         const regex: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
         if (regex.test(data.email) === false) {
@@ -48,6 +58,7 @@ const Register = () => {
         axios.post(`${API}/register`, data)
             .then(() => navigate('/login'))
             .catch((err) => {
+                console.error(err)
                 const { username, email, password } = JSON.parse(err.config.data);
                 if (username.length > 33) {
                     setErrors({ ...errors, username: "Máximo de 33 caracteres." });
