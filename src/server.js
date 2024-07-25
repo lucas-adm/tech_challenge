@@ -44,7 +44,7 @@ app.get('/launchs', async (req, res) => {
     try {
         const { month, year } = req.query;
 
-        const launchs = await db('launchs').whereRaw("EXTRACT(MONTH FROM date) = ? AND EXTRACT(YEAR FROM date) = ?", [month, year]);
+        const launchs = await db('launchs').whereRaw("EXTRACT(MONTH FROM date) = ? AND EXTRACT(YEAR FROM date) = ?", [month, year]).orderBy('date', 'desc');
 
         const totalCreditValue = await db('launchs')
             .whereRaw("EXTRACT(MONTH FROM date) = ? AND EXTRACT(YEAR FROM date) = ?", [month, year])
