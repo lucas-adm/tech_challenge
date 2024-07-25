@@ -66,7 +66,7 @@ const Home = () => {
                     ...totals, totalDebit: res.data.totalDebitValue.totalDebit, totalCredit: res.data.totalCreditValue.totalCredit
                 })
             })
-            .catch((err) => console.error(err))
+            .catch()
             .finally(() => setRequesting(false));
     }, [currentDate, newLaunchs])
 
@@ -137,18 +137,19 @@ const Home = () => {
                                             <th className="p-3 text-sm font-semibold tracking-wide text-left">Descrição</th>
                                             <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">Valor</th>
                                             <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">Tipo</th>
+                                            <th className="w-24 p-3 text-sm font-semibold tracking-wide text-center">Excluir</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-100">
                                         {launchs.map(launch => (
-                                            < TableRow key={launch.id} date={launch.date} description={launch.description} value={launch.value} type={launch.type} />
+                                            <TableRow key={launch.id} id={launch.id} date={launch.date} description={launch.description} value={launch.value} type={launch.type} onDelete={() => { setNewLaunchs(prevLaunchs => prevLaunchs - 1) }} />
                                         ))}
                                     </tbody>
                                 </table>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
                                 {launchs.map(launch => (
-                                    < MobileTableRow key={launch.id} date={launch.date} description={launch.description} value={launch.value} type={launch.type} />
+                                    <MobileTableRow key={launch.id} id={launch.id} date={launch.date} description={launch.description} value={launch.value} type={launch.type} onDelete={() => { setNewLaunchs(prevLaunchs => prevLaunchs - 1) }} />
                                 ))}
                             </div>
                         </>

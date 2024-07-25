@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import React, { forwardRef } from 'react';
 
 export type Launch = {
-    id?: number | null;
+    id?: number;
     date: string;
     description: string;
     value: string;

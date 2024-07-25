@@ -8,8 +8,8 @@ process.env.TZ = 'America/Sao_Paulo';
 const port = process.env.PORT || 3000;
 
 const app = express();
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 
 app.use(express.static('./dist'));
 
@@ -24,7 +24,7 @@ app.post('/register', async (req, res) => {
         console.error("Error while saving data.");
         res.status(500).json({ error: "Internal Server Error" });
     }
-})
+});
 
 app.post('/login', async (req, res) => {
     try {
@@ -39,7 +39,7 @@ app.post('/login', async (req, res) => {
         console.error("Error while saving data.");
         res.status(500).json({ error: "Internal Server Error" });
     }
-})
+});
 
 app.get('/launchs', async (req, res) => {
     try {
@@ -79,8 +79,19 @@ app.post('/launch', async (req, res) => {
         console.error("Error while saving data.");
         res.status(500).json({ error: "Internal Server Error" });
     }
-})
+});
+
+app.delete('/launch/:id', async (req, res) => {
+    try {
+        const launch = req.params.id;
+        await db('launchs').where('id', launch).del();
+        res.status(204).send("Successful!");
+    } catch (error) {
+        console.error("Error while deleting data.");
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 process.on('SIGNINT', () => {
     server.close();
-})
+});
