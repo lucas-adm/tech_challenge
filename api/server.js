@@ -2,7 +2,7 @@
 
 import express from 'express';
 import cors from 'cors';
-import db from './DB.js';
+import db from '../database/DB.js';
 
 process.env.TZ = 'America/Sao_Paulo';
 const port = process.env.PORT || 3000;
@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json())
 app.use(cors())
 
-app.use(express.static('dist'));
+app.use(express.static('./dist'));
 
 const server = app.listen(port, () => { console.log(`Running on ${port}`) });
 

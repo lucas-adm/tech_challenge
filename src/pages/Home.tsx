@@ -1,10 +1,10 @@
-import { Launch } from "./components/Form";
+import { Launch } from "../components/Form";
 
-import Form from "./components/Form";
-import TableRow from "./components/TableRow";
-import MobileTableRow from "./components/MobileTableRow";
+import Form from "../components/Form";
+import TableRow from "../components/TableRow";
+import MobileTableRow from "../components/MobileTableRow";
 
-import TotalCard from "./components/TotalCard";
+import TotalCard from "../components/TotalCard";
 
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";

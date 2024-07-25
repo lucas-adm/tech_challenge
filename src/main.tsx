@@ -4,10 +4,10 @@ import App from './App.tsx'
 import './index.css'
 
 import Validator from './Validator.tsx'
-import Register from './Register.tsx'
-import Login from './Login.tsx'
-import NotFound from './NotFound.tsx'
-import Home from './Home.tsx'
+import Register from './pages/Register.tsx'
+import Login from './pages/Login.tsx'
+import NotFound from './pages/NotFound.tsx'
+import Home from './pages/Home.tsx'
 
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 
