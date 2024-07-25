@@ -52,7 +52,10 @@ const Home = () => {
 
     const [launchs, setLaunchs] = useState<Launch[]>([]);
 
+    const [requesting, setRequesting] = useState<boolean>(false);
+
     useEffect(() => {
+        setRequesting(true);
         const API = import.meta.env.VITE_API;
         axios.get(`${API}/launchs?month=${currentDate.month}&year=${currentDate.year}`)
             .then((res) => {
@@ -62,6 +65,7 @@ const Home = () => {
                 })
             })
             .catch((err) => console.error(err))
+            .finally(() => setRequesting(false));
     }, [currentDate])
 
     const navigate = useNavigate();
@@ -87,7 +91,7 @@ const Home = () => {
                 </header>
                 <main className="flex flex-col gap-4 w-full max-w-5xl m-auto p-4">
                     <header className="flex justify-between gap-4 max-[475px]:flex-col">
-                        <h2 className="text-2xl self-center">Lançamentos</h2>
+                        <h2 className="text-2xl self-center dark:text-white">Lançamentos</h2>
                         <div className="flex gap-4 max-[475px]:justify-center">
                             <select name="yearlist" id="years" value={currentDate.year} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setCurrentDate({ ...currentDate, year: Number(event.target.value) }) }}>
                                 <option value="2025">2025</option>
@@ -114,35 +118,39 @@ const Home = () => {
                             <button onClick={toggleModal} className="bg-indigo-500 bg-opacity-50 py-4 px-6 rounded text-lg text-indigo-800 outline-none dark:text-white">Registrar</button>
                         </div>
                     </header>
-
-                    <div className="flex justify-between gap-4">
-                        <TotalCard type="debit" value={totals.totalDebit} />
-                        <TotalCard type="credit" value={totals.totalCredit} />
-                    </div>
-
-                    <div className="overflow-auto rounded-lg shadow hidden md:block">
-                        <table className="w-full">
-                            <thead className="bg-gray-50 border-b-2 border-gray-200">
-                                <tr>
-                                    <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left">Data</th>
-                                    <th className="p-3 text-sm font-semibold tracking-wide text-left">Descrição</th>
-                                    <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">Valor</th>
-                                    <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">Tipo</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-100">
+                    {requesting ?
+                        <>
+                            <img src="/svgs/loading.svg" alt="loading signal" className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-12" />
+                        </> :
+                        <>
+                            <div className="flex justify-between gap-4">
+                                <TotalCard type="debit" value={totals.totalDebit} />
+                                <TotalCard type="credit" value={totals.totalCredit} />
+                            </div>
+                            <div className="overflow-auto rounded-lg shadow hidden md:block">
+                                <table className="w-full">
+                                    <thead className="bg-gray-50 border-b-2 border-gray-200">
+                                        <tr>
+                                            <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left">Data</th>
+                                            <th className="p-3 text-sm font-semibold tracking-wide text-left">Descrição</th>
+                                            <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">Valor</th>
+                                            <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">Tipo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-100">
+                                        {launchs.map(launch => (
+                                            < TableRow key={launch.id} date={launch.date} description={launch.description} value={launch.value} type={launch.type} />
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
                                 {launchs.map(launch => (
-                                    < TableRow key={launch.id} date={launch.date} description={launch.description} value={launch.value} type={launch.type} />
+                                    < MobileTableRow key={launch.id} date={launch.date} description={launch.description} value={launch.value} type={launch.type} />
                                 ))}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
-                        {launchs.map(launch => (
-                            < MobileTableRow key={launch.id} date={launch.date} description={launch.description} value={launch.value} type={launch.type} />
-                        ))}
-                    </div>
+                            </div>
+                        </>
+                    }
                 </main>
                 {showModal &&
                     <div className="h-svh md:h-screen w-screen bg-black fixed bg-opacity-85 top-0 left-0">
