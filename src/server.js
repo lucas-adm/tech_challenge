@@ -5,6 +5,7 @@ import cors from 'cors';
 
 import db from './DB.js';
 
+process.env.TZ = 'America/Sao_Paulo';
 const port = process.env.PORT || 3000;
 
 const app = express();
