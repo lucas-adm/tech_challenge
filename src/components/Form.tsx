@@ -18,11 +18,12 @@ type Errors = {
 }
 
 type FormProps = {
-    onSubmit: () => void,
-    ref: React.RefObject<HTMLFormElement>
+    ref: React.RefObject<HTMLFormElement>;
+    onSubmit: () => void;
+    onNewLaunch: () => void;
 }
 
-const Form = forwardRef<HTMLFormElement, FormProps>(({ onSubmit }, ref) => {
+const Form = forwardRef<HTMLFormElement, FormProps>(({ onSubmit, onNewLaunch }, ref) => {
 
     const [darkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
 
@@ -123,8 +124,8 @@ const Form = forwardRef<HTMLFormElement, FormProps>(({ onSubmit }, ref) => {
 
         axios.post(`${API}/launch`, data)
             .then(() => {
-                location.reload();
                 onSubmit();
+                onNewLaunch();
             })
             .catch((err) => {
                 const { date, description, value } = JSON.parse(err.config.data);

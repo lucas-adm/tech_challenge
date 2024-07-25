@@ -52,6 +52,8 @@ const Home = () => {
 
     const [launchs, setLaunchs] = useState<Launch[]>([]);
 
+    const [newLaunchs, setNewLaunchs] = useState<number>(0);
+
     const [requesting, setRequesting] = useState<boolean>(false);
 
     useEffect(() => {
@@ -66,7 +68,7 @@ const Home = () => {
             })
             .catch((err) => console.error(err))
             .finally(() => setRequesting(false));
-    }, [currentDate])
+    }, [currentDate, newLaunchs])
 
     const navigate = useNavigate();
 
@@ -154,7 +156,7 @@ const Home = () => {
                 </main>
                 {showModal &&
                     <div className="h-svh md:h-screen w-screen bg-black fixed bg-opacity-85 top-0 left-0">
-                        <Form ref={modalRef} onSubmit={toggleModal} />
+                        <Form ref={modalRef} onSubmit={toggleModal} onNewLaunch={() => { setNewLaunchs(prevLaunchs => prevLaunchs + 1) }} />
                     </div>
                 }
             </div>
