@@ -41,7 +41,7 @@ const TableRow = ({ id, date, description, value, type, onDelete }: TableRow) =>
                 {description}
             </td>
             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                <span className="font-bold text-indigo-500">R$ {value.replace('.', ',')}</span>
+                <span className="font-bold text-violet-500">R$ {value.replace('.', ',')}</span>
             </td>
             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                 {type === "debit" &&
@@ -50,7 +50,7 @@ const TableRow = ({ id, date, description, value, type, onDelete }: TableRow) =>
                     </span>
                 }
                 {type === "credit" &&
-                    <span className="p-1.5 text-xs font-medium uppercase tracking-wider text-indigo-800 bg-indigo-200 rounded-lg bg-opacity-50">
+                    <span className="p-1.5 text-xs font-medium uppercase tracking-wider text-violet-800 bg-violet-200 rounded-lg bg-opacity-50">
                         crédito
                     </span>
                 }
@@ -63,10 +63,10 @@ const TableRow = ({ id, date, description, value, type, onDelete }: TableRow) =>
                     <>
                         {requested ?
                             <>
-                                <FaCheckCircle onClick={() => handleDeleteById(id)} className="cursor-pointer text-red-500 hover:text-indigo-500 transition-colors m-auto" />
+                                <FaCheckCircle onClick={() => handleDeleteById(id)} className="cursor-pointer text-red-500 hover:text-violet-500 transition-colors m-auto" />
                             </> :
                             <>
-                                <FaMinus onClick={request} className="cursor-pointer hover:text-indigo-500 transition-colors m-auto" />
+                                <FaMinus onClick={request} className="cursor-pointer hover:text-violet-500 transition-colors m-auto" />
                             </>
                         }
                     </>

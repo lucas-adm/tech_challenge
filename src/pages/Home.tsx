@@ -74,21 +74,21 @@ const Home = () => {
 
     return (
         <div className={`${darkMode ? "dark" : ""}`}>
-            <div className="w-screen max-w-full min-h-svh md:min-h-screen bg-slate-50 dark:bg-slate-950">
-                <header className="w-screen max-w-full bg-indigo-500 p-4">
-                    <div className="hidden md:flex max-w-5xl m-auto items-center justify-between p-4">
+            <div className="w-screen max-w-full min-h-svh md:min-h-screen bg-slate-50 dark:bg-slate-900 bg-gradient-to-b from-transparent via-transparent to-violet-50 dark:to-violet-900/25">
+                <header className="w-screen max-w-full p-2 bg-gradient-to-b from-violet-300 to-transparent ... dark:from-violet-950">
+                    <div className="hidden md:flex max-w-5xl m-auto items-center justify-between p-2">
                         <div className="flex items-center justify-center gap-2">
-                            <img src="/imgs/favicon.png" alt="favicon" className="rounded-full w-12" />
-                            <h1 className="text-3xl font-bold text-indigo-500 bg-slate-50 w-fit py-1 px-2 rounded">Contabilidade Eficiente</h1>
+                            <img src="/imgs/favicon.png" alt="favicon" className="w-16" />
+                            <h1 className="text-3xl font-bold text-violet-600 dark:text-violet-300 bg-white/30 shadow-md backdrop-blur-sm w-fit py-1 px-2 rounded-lg">Contabilidade Eficiente</h1>
                         </div>
-                        <button onClick={() => { sessionStorage.removeItem("logged"), navigate('/login') }} className="text-white font-bold">Sair</button>
+                        <button onClick={() => { sessionStorage.removeItem("logged"), navigate('/login') }} className="text-violet-900 dark:text-white font-bold">Sair</button>
                     </div>
                     <div className="md:hidden flex justify-between p-4">
                         <div className="flex items-center justify-center gap-2">
-                            <img src="/imgs/favicon.png" alt="favicon" className="rounded-full w-12" />
-                            <h1 className="text-3xl font-bold text-indigo-500 bg-slate-50 w-fit py-1 px-2 rounded">C.E</h1>
+                            <img src="/imgs/favicon.png" alt="favicon" className="w-16" />
+                            <h1 className="text-3xl font-bold text-violet-600 dark:text-violet-300 bg-white/30 backdrop-blur-sm w-fit py-1 px-2 rounded-lg">C.E</h1>
                         </div>
-                        <button onClick={() => { sessionStorage.removeItem("logged"), navigate('/login') }} className="text-white font-bold">Sair</button>
+                        <button onClick={() => { sessionStorage.removeItem("logged"), navigate('/login') }} className="text-violet-900 dark:text-white font-bold">Sair</button>
                     </div>
                 </header>
                 <main className="flex flex-col gap-4 w-full max-w-5xl m-auto p-4">
@@ -117,7 +117,7 @@ const Home = () => {
                                 <option value="11">Novembro</option>
                                 <option value="12">Dezembro</option>
                             </select>
-                            <button onClick={toggleModal} className="bg-indigo-500 bg-opacity-50 py-4 px-6 rounded text-lg text-indigo-800 outline-none dark:text-white">Registrar</button>
+                            <button onClick={toggleModal} className="bg-violet-600  text-white py-2 px-4 rounded text-lg dark:text-white hover:bg-violet-800 transition-colors">Registrar</button>
                         </div>
                     </header>
                     {requesting ?
@@ -156,7 +156,7 @@ const Home = () => {
                     }
                 </main>
                 {showModal &&
-                    <div className="h-svh md:h-screen w-screen bg-black fixed bg-opacity-85 top-0 left-0">
+                    <div className="min-h-svh md:min-h-screen w-screen fixed top-0 left-0 backdrop-blur-md">
                         <Form ref={modalRef} onSubmit={toggleModal} onNewLaunch={() => { setNewLaunchs(prevLaunchs => prevLaunchs + 1) }} />
                     </div>
                 }

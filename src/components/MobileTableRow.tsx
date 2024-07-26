@@ -34,7 +34,7 @@ const MobileTableRow = ({ id, date, description, value, type, onDelete }: TableR
                             <span className="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg bg-opacity-50">débito</span>
                         }
                         {type === "credit" &&
-                            <span className="p-1.5 text-xs font-medium uppercase tracking-wider text-indigo-800 bg-indigo-200 rounded-lg bg-opacity-50">crédito</span>
+                            <span className="p-1.5 text-xs font-medium uppercase tracking-wider text-violet-800 bg-violet-200 rounded-lg bg-opacity-50">crédito</span>
                         }
                     </div>
                 </div>
@@ -46,10 +46,10 @@ const MobileTableRow = ({ id, date, description, value, type, onDelete }: TableR
                         <>
                             {requested ?
                                 <>
-                                    <FaCheckCircle onClick={() => handleDeleteById(id)} className="cursor-pointer text-red-500 hover:text-indigo-500 transition-colors m-auto" />
+                                    <FaCheckCircle onClick={() => handleDeleteById(id)} className="cursor-pointer text-red-500 hover:text-violet-500 transition-colors m-auto" />
                                 </> :
                                 <>
-                                    <FaMinus onClick={request} className="cursor-pointer hover:text-indigo-500 transition-colors m-auto" />
+                                    <FaMinus onClick={request} className="cursor-pointer hover:text-violet-500 transition-colors m-auto" />
                                 </>
                             }
                         </>
@@ -57,7 +57,7 @@ const MobileTableRow = ({ id, date, description, value, type, onDelete }: TableR
                 </div>
             </div>
             <div className="text-sm text-gray-700">{description}</div>
-            <div className="text-sm font-medium text-indigo-500">R$ {value.replace('.', ',')}</div>
+            <div className="text-sm font-medium text-violet-500">R$ {value.replace('.', ',')}</div>
         </div>
     )
 }
