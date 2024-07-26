@@ -9,6 +9,13 @@ type Login = {
     password: string;
 };
 
+type Errors = {
+    username: string;
+    email: string;
+    password: string;
+    credentials: string;
+};
+
 const Login = () => {
 
     const [darkMode] = useState<boolean>(() => { return window.matchMedia("(prefers-color-scheme: dark)").matches; });
@@ -19,12 +26,19 @@ const Login = () => {
         password: ""
     };
 
+    const initialError: Errors = {
+        username: "",
+        email: "",
+        password: "",
+        credentials: ""
+    };
+
     const [data, setData] = useState<Login>(initialData);
-    const [errors, setErrors] = useState<Login>(initialData);
+    const [errors, setErrors] = useState<Errors>(initialError);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setErrors({
-            ...errors, [event.target.name]: ""
+            ...errors, [event.target.name]: "", credentials: ""
         })
         setData({
             ...data, [event.target.name]: event.target.value
@@ -46,7 +60,7 @@ const Login = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(), setRequesting(true);
 
-        const regex: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+        const regex: RegExp = /[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gi
         if (regex.test(data.email) === false) {
             setRequesting(false);
             return setErrors({ ...errors, email: "Email inválido." });
@@ -59,9 +73,8 @@ const Login = () => {
                 sessionStorage.setItem("logged", "true")
             })
             .catch((err) => {
-                console.error(err);
                 if (err.response.status === 404) {
-                    setErrors({ ...errors, username: "Talvez esteja errado", email: "Talvez esteja errado", password: "Talvez esteja errado" })
+                    setErrors({ ...errors, credentials: "Credenciais inválidas." })
                 }
                 const { username, email, password } = JSON.parse(err.config.data);
                 if (username.length > 33) setErrors({ ...errors, username: "Máximo de 33 caracteres." });
@@ -75,31 +88,37 @@ const Login = () => {
 
     return (
         <div className={`${darkMode ? "dark" : ""}`}>
-            <section className="w-screen h-svh md:h-screen flex flex-col gap-4 flex-center justify-center items-center bg-white dark:bg-slate-950">
-                <img src="/imgs/favicon.png" alt="favicon" className="w-24 rounded-full border-2 border-transparent hover:border-indigo-500 transition-colors" />
-                <form onSubmit={handleSubmit} className="w-full max-w-sm border-2 border-indigo-500 flex flex-col gap-2 bg-slate-50 dark:bg-slate-900 p-8 rounded">
-                    <div className="flex flex-col gap-1">
-                        <label htmlFor="username" className="w-fit dark:text-white">Nome</label>
-                        <input id="username" name="username" type="text" placeholder="Insira seu nome" required onChange={handleChange} className="p-2 border border-slate-400 rounded focus:border-indigo-500 focus:outline-none" />
-                        <span className="text-red-500">{errors.username}</span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        <label htmlFor="email" className="w-fit dark:text-white">Email</label>
-                        <input id="email" name="email" type="text" placeholder="Insira seu email" required onChange={handleChange} className="p-2 border border-slate-400 rounded focus:border-indigo-500 focus:outline-none" />
-                        <span className="text-red-500">{errors.email}</span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        <label htmlFor="password" className="w-fit dark:text-white">Senha</label>
-                        <input id="password" name="password" type="password" placeholder="Insira sua senha" required onChange={handleChange} className="p-2 border border-slate-400 rounded focus:border-indigo-500 focus:outline-none" />
-                        <span className="text-red-500">{errors.password}</span>
-                    </div>
-                    <div className="flex items-center justify-center">
-                        <button className="bg-indigo-500 bg-opacity-50 py-2 px-4 rounded text-lg text-indigo-800 w-full text-center dark:text-white mt-4">{requesting ? "Conectando..." : "Conectar"}</button>
-                    </div>
-                    <div className="flex items-center justify-center">
-                        <Link to={'/register'} className="bg-white border-2 border-indigo-500 bg-opacity-50 dark:bg-opacity-100  py-2 px-4 rounded text-lg text-indigo-800 w-full text-center dark:text-indigo-500 mt-4">Cadastrar</Link>
-                    </div>
-                </form>
+            <section className="w-screen max-w-full h-svh md:h-screen grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <section className="w-screen max-w-full h-svh md:h-screen flex flex-col flex-center justify-center items-center bg-white dark:bg-slate-900">
+                    <img src="/imgs/favicon.png" alt="favicon" className="w-24 -full backdrop transition" style={{ filter: "drop-shadow(0 0 2rem #5b21b6)" }} />
+                    <form onSubmit={handleSubmit} className="w-full max-w-sm flex flex-col gap-2 p-8">
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="username" className="w-fit dark:text-white">Nome</label>
+                            <input id="username" name="username" type="text" placeholder="Insira seu nome" required onChange={handleChange} className="p-2 border border-slate-400 rounded focus:border-violet-500 focus:outline-none focus:shadow-md focus:shadow-violet-400 transition" />
+                            <span className="text-red-500">{errors.username}</span>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="email" className="w-fit dark:text-white">Email</label>
+                            <input id="email" name="email" type="text" placeholder="Insira seu email" required onChange={handleChange} className="p-2 border border-slate-400 rounded focus:border-violet-500 focus:outline-none focus:shadow-md focus:shadow-violet-400 transition" />
+                            <span className="text-red-500">{errors.email}</span>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="password" className="w-fit dark:text-white">Senha</label>
+                            <input id="password" name="password" type="password" placeholder="Insira sua senha" required onChange={handleChange} className="p-2 border border-slate-400 rounded focus:border-violet-500 focus:outline-none focus:shadow-md focus:shadow-violet-400 transition" />
+                            <span className="text-red-500">{errors.password}</span>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <span className="text-red-500 mt-4">{errors.credentials}</span>
+                        </div>
+                        <div className="flex items-center justify-center">
+                            <button className="bg-violet-500 bg-opacity-50 dark:bg-opacity-100 py-2 px-4 rounded text-lg text-violet-600 w-full text-center dark:text-white mt-4 hover:shadow-md hover:shadow-violet-400 transition">{requesting ? "Conectando..." : "Conectar"}</button>
+                        </div>
+                        <div className="flex items-center justify-center">
+                            <Link to={'/register'} className="bg-white border-2 border-violet-500 bg-opacity-50 dark:bg-opacity-100  py-2 px-4 rounded text-lg text-violet-800 w-full text-center dark:text-violet-500 mt-4 hover:shadow-md hover:shadow-violet-400 transition">Cadastrar</Link>
+                        </div>
+                    </form>
+                </section>
+                <div className="lg:col-span-2 xl:col-span-3 pattern-isometric pattern-violet-600 pattern-bg-slate-50 dark:pattern-bg-slate-900 pattern-size-16 pattern-opacity-50 dark:pattern-opacity-80"></div>
             </section>
         </div>
     )

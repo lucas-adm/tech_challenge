@@ -16,6 +16,17 @@ app.use(express.static('./dist'));
 const server = app.listen(port, () => { console.log(`Running on ${port}`) });
 
 app.post('/register', async (req, res) => {
+
+    const { username, email } = req.body
+
+    if (await db('users').where('username', username).first()) {
+        return res.status(400).json({ error: "Username unavailable" })
+    }
+
+    if (await db('users').where('email', email).first()) {
+        return res.status(400).json({ error: "Email unavailable" })
+    }
+
     try {
         const data = req.body;
         await db('users').insert(data);
@@ -24,6 +35,7 @@ app.post('/register', async (req, res) => {
         console.error("Error while saving data.");
         res.status(500).json({ error: "Internal Server Error" });
     }
+
 });
 
 app.post('/login', async (req, res) => {
