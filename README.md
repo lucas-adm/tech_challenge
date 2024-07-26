@@ -4,7 +4,7 @@
 
   ## Linguagens Utilizadas:
     
-  ###### PostgreSQL, Knex.js, Express.js, Docker, Tailwind, JavaScript, TypeScript, React.js
+  ###### PostgreSQL, Knex.js, Express.js, Docker, Tailwind CSS, JavaScript, TypeScript, React.js
   
 </div>
 
@@ -17,6 +17,7 @@ O projeto utiliza uma variedade de tecnologias. Essas ferramentas trabalham em c
 ## Funcionalidades
 
 <ul>
+  <li>Adaptação automática para sistemas modo claro ou escuro</li>
   <li>Cadastro de usuário</li>
   <li>Login de usuário</li>
   <li>Logout de usuário</li>
@@ -41,6 +42,8 @@ O projeto utiliza uma variedade de tecnologias. Essas ferramentas trabalham em c
   Requisitos:
   
   `Docker`
+
+  > Certifique-se de não ter alterado o arquivo .env
   
   Para iniciar a aplicação: dentro do diretório, execute no terminal:
   ```
@@ -88,10 +91,13 @@ O projeto utiliza uma variedade de tecnologias. Essas ferramentas trabalham em c
 
 ## Créditos
 
-###### Banco de Dados e Server Deploy por <a href="https://render.com">*Render*</a>
+- ###### Logo por <a href="https://copilot.microsoft.com">*Microsoft Copilot*</a>
 
-###### Table layout by <a href="https://www.youtube.com/watch?v=S4MhQ6peq8A">cdruc</a>
+- ###### Banco de Dados e Server Deploy por <a href="https://render.com">*Render*</a>
 
+- ###### Layout de tabela por <a href="https://www.youtube.com/watch?v=S4MhQ6peq8A">*cdruc*</a>
+
+- ###### Padrão de fundo por <a href="https://hillmann.cc/tailwindcss-bg-patterns/">*thillmann*</a>
 
 ## Instruções de uso
 
@@ -123,17 +129,17 @@ Para excluir lançamento:
 ```
 Para cancelar exclusão de lançamento:
 ```
-> A exclusão será canceçado ao passar de 3 segundos sem confirmação da mesma
+> A exclusão será cancelada após 3 segundos sem confirmação da mesma
 
 ```
 Para buscar lançamento:
 ```
-> Altera a seleção de anos ou mês acima da lista de lançamentos
+> Altere a seleção de ano ou mês acima da lista de lançamentos
 
 <br>
 
 <div aling="center">
 
-  ![image](https://github.com/user-attachments/assets/0d7ab969-6d6b-4627-96c3-bdb1197531b4)
+  ![image](https://github.com/user-attachments/assets/afbe8b03-9bc2-498a-8999-c9122c71a556)
 
 </div>
