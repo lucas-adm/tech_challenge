@@ -2,6 +2,8 @@ import { useState } from "react";
 import { FaMinus } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 
+import { NumericFormat } from "react-number-format";
+
 import axios from "axios"
 
 type TableRow = {
@@ -41,7 +43,17 @@ const TableRow = ({ id, date, description, value, type, onDelete }: TableRow) =>
                 {description}
             </td>
             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                <span className="font-bold text-violet-500">R$ {value.replace('.', ',')}</span>
+                <span className="font-bold text-violet-500">
+                    <NumericFormat
+                        value={value}
+                        displayType="text"
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        decimalSeparator=","
+                        thousandSeparator="."
+                        prefix="R$ "
+                    />
+                </span>
             </td>
             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                 {type === "debit" &&

@@ -1,3 +1,5 @@
+import { NumericFormat } from "react-number-format"
+
 type TotalCardProps = {
     type: string;
     value: string | null;
@@ -9,13 +11,40 @@ const TotalCard = ({ type, value }: TotalCardProps) => {
             {type === "debit" &&
                 <>
                     <h3 className="text-lg text-violet-800 dark:text-violet-600 font-bold">Débito mensal</h3>
-                    <p className="text-lg text-violet-800 dark:text-violet-600 font-bold">R$ {value !== null ? value : "0"}</p>
+                    <p className="text-lg text-violet-800 dark:text-violet-600 font-bold">
+                        {value !== null ?
+                            <NumericFormat
+                                value={value}
+                                displayType="text"
+                                decimalScale={2}
+                                fixedDecimalScale={true}
+                                decimalSeparator=","
+                                thousandSeparator="."
+                                prefix="R$ "
+                            />
+                            : "0"
+                        }
+                    </p>
+
                 </>
             }
             {type === "credit" &&
                 <>
                     <h3 className="text-lg text-violet-800 dark:text-violet-600 font-bold">Crédito mensal</h3>
-                    <p className="text-lg text-violet-800 dark:text-violet-600 font-bold">R$ {value !== null ? value : "0"}</p>
+                    <p className="text-lg text-violet-800 dark:text-violet-600 font-bold">
+                        {value !== null ?
+                            <NumericFormat
+                                value={value}
+                                displayType="text"
+                                decimalScale={2}
+                                fixedDecimalScale={true}
+                                decimalSeparator=","
+                                thousandSeparator="."
+                                prefix="R$ "
+                            />
+                            : "0"
+                        }
+                    </p>
                 </>
             }
         </div>

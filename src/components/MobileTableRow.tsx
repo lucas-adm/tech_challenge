@@ -4,6 +4,8 @@ import { useState } from "react";
 import { FaMinus } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 
+import { NumericFormat } from "react-number-format";
+
 import axios from "axios";
 
 const MobileTableRow = ({ id, date, description, value, type, onDelete }: TableRow) => {
@@ -57,7 +59,17 @@ const MobileTableRow = ({ id, date, description, value, type, onDelete }: TableR
                 </div>
             </div>
             <div className="text-sm text-gray-700">{description}</div>
-            <div className="text-sm font-medium text-violet-500">R$ {value.replace('.', ',')}</div>
+            <div className="text-sm font-medium text-violet-500">
+                <NumericFormat
+                    value={value}
+                    displayType="text"
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    decimalSeparator=","
+                    thousandSeparator="."
+                    prefix="R$ "
+                />
+            </div>
         </div>
     )
 }

@@ -92,9 +92,9 @@ const Home = () => {
                     </div>
                 </header>
                 <main className="flex flex-col gap-4 w-full max-w-5xl m-auto p-4">
-                    <header className="flex justify-between gap-4 max-[475px]:flex-col">
+                    <header className="flex justify-between gap-4 max-[500px]:flex-col">
                         <h2 className="text-2xl self-center dark:text-white">Lançamentos</h2>
-                        <div className="flex gap-4 max-[475px]:justify-center">
+                        <div className="flex gap-4 max-[500px]:justify-center">
                             <select name="yearlist" id="years" value={currentDate.year} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setCurrentDate({ ...currentDate, year: Number(event.target.value) }) }}>
                                 <option value="2025">2025</option>
                                 <option value="2024">2024</option>
@@ -125,7 +125,7 @@ const Home = () => {
                             <img src="/svgs/loading.svg" alt="loading signal" className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-12" />
                         </> :
                         <>
-                            <div className="flex justify-between gap-4">
+                            <div className="flex max-[427px]:flex-col justify-between gap-4">
                                 <TotalCard type="debit" value={totals.totalDebit} />
                                 <TotalCard type="credit" value={totals.totalCredit} />
                             </div>

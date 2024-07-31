@@ -1,6 +1,10 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
+
+import { NumberFormatValues, NumericFormat } from 'react-number-format';
+
+import axios from "axios";
+
 
 export type Launch = {
     id?: number;
@@ -77,10 +81,6 @@ const Form = forwardRef<HTMLFormElement, FormProps>(({ onSubmit, onNewLaunch }, 
             setValidDate(yyyy.length === 4);
         }
 
-        if (event.target.name === "value") {
-            event.target.value = event.target.value.replace(/[^\d.]/g, '');
-        }
-
         setData({
             ...data,
             [event.target.name]: event.target.value,
@@ -155,7 +155,21 @@ const Form = forwardRef<HTMLFormElement, FormProps>(({ onSubmit, onNewLaunch }, 
                 </div>
                 <div className="flex flex-col gap-1">
                     <label htmlFor="value" className="w-fit dark:text-white">Valor</label>
-                    <input id="value" type="text" name="value" placeholder="Siga o modelo: 11.11" value={data.value} required onChange={handleOnChange} className="p-2 border border-slate-400 rounded focus:border-violet-500 focus:outline-none focus:shadow-md focus:shadow-violet-400 transition" />
+                    <NumericFormat
+                        className="p-2 border border-slate-400 rounded focus:border-violet-500 focus:outline-none focus:shadow-md focus:shadow-violet-400 transition"
+                        value={data.value}
+                        onValueChange={(values: NumberFormatValues) => {
+                            setData({ ...data, value: values.value })
+                        }}
+                        allowLeadingZeros={false}
+                        allowNegative={false}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        decimalSeparator=","
+                        thousandSeparator="."
+                        prefix="R$ "
+                        placeholder="Insira seu valor"
+                    />
                     <span className="text-red-500">{errors.value}</span>
                 </div>
                 <div className="flex flex-col gap-1">
